@@ -3,4 +3,5 @@ __pycache__/*
 website/__pycache__
 .idea/
 instance/database.db
+instance/img/*
 __pycache__/main.cpython-310.pyc
