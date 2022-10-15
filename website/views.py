@@ -25,7 +25,7 @@ def home():
                                                                                             visibility=True)
                                .filter(Event.date < Event.endDate).order_by(Event.date).all())
     else:
-        return render_template("home.html", base_url=url_for('views.image_folder'), image=Image, user=current_user, events=Event.query.filter_by(visibility=True)
+        return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), image=Image, user=current_user, events=Event.query.filter_by(visibility=True)
                                .filter(Event.date < Event.endDate).order_by(Event.date).all())
 
 def allowed_file(filename):
