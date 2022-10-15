@@ -13,9 +13,9 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 def home():
     if current_user.is_authenticated:
-        return render_template("home.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(Event.date>=datetime.now()-timedelta(hours=5)).order_by(desc(Event.date)).all())
+        return render_template("home.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(Event.date<Event.endDate).order_by(Event.date).all())
     else:
-        return render_template("home.html", user=current_user, events=Event.query.filter_by(visibility=True).filter(Event.date>=datetime.now()-timedelta(hours=5)).order_by(desc(Event.date)).all())
+        return render_template("home.html", user=current_user, events=Event.query.filter_by(visibility=True).filter(Event.date<Event.endDate).order_by(Event.date).all())
 
 @views.route('/add-event', methods=['GET', 'POST'])
 @login_required
