@@ -20,7 +20,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 # Whenever we go on URL and type in /, this will show
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template("home.html", user=current_user, events=Event.query.filter_by(visibility=True)
+    return render_template("home.html", user=current_user, editEvents = False, events=Event.query.filter_by(visibility=True)
                            .filter(Event.date < Event.endDate).order_by(Event.date).all())
 
 def allowed_file(filename):
@@ -111,4 +111,4 @@ def all_events():
 @views.route('/user-events', methods=['GET', 'POST'])
 @login_required
 def user_events():
-    return render_template("user_events.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(Event.date<Event.endDate).order_by(Event.date).all())
+    return render_template("home.html", user=current_user, editEvents = True, events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(Event.date<Event.endDate).order_by(Event.date).all())
