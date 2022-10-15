@@ -12,7 +12,7 @@
         <div class="card mb-2 mt-2" style="max-width: 2000px;">
           <div class="card-header d-flex">
             <div>
-              <h4 style="margin-bottom: -1px;">{{ event.name }}</h4>
+              <h4 style="margin-bottom: -1px;">{{ event.name }} {{ event.date.strftime("%d.%m.%Y %H:%M") }}</h4>
             </div>
             <a href="{{ 'https://www.google.com/maps?q=' + event.location }}" 
               class="ms-auto text-decoration-none" 
