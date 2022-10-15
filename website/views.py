@@ -17,14 +17,56 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 @views.route('/all-events', methods=['GET', 'Post'])
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    
-
-    return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), images=Images, user=current_user, editEvents=False, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all())
+    events=Events.query.filter_by(visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all()
+    data = []
+    for i in range(len(events)):
+        print('i: '+str(i))
+        data.append(1)
+        data[i] = []
+        data[i].append(1)
+        data[i].append(1)
+        data[i].append(1)
+        data[i].append(1)
+        data[i][0] = events[i]
+        data[i][1] = []
+        data[i][2] = []
+        data[i][3] = []
+        for link in Ehfht.query.filter_by(eventsId=events[i].id).all():
+            #print('link: '+link)
+            if link.portions == 0:
+                continue
+            data[i][1].append(Foods.query.filter_by(id=link.foodsId).first().name)
+            data[i][2].append(link.portions)
+            data[i][3].append(Tags.query.filter_by(id=link.tagsId).first().name)
+    print(data)
+    return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), user=current_user, editEvents=False, processed_data=data)
 
 @views.route('/user-events', methods=['GET', 'POST'])
 @login_required
 def user_events():
-    return render_template("home.html", user=current_user, ehfht=Ehfht, foods=Foods, editEvents=True, base_url=(url_for('views.home')+'img'+'/'), images=Images, events=Events.query.filter_by(user=current_user.id, visibility=True).filter(Events.creationDate<Events.expirationDate).order_by(Events.creationDate).all())
+    events=Events.query.filter_by(user=current_user.id, visibility=True).filter(Events.creationDate<Events.expirationDate).order_by(Events.creationDate).all()
+    data = []
+    for i in range(len(events)):
+        print('i: ' + str(i))
+        data.append(1)
+        data[i] = []
+        data[i].append(1)
+        data[i].append(1)
+        data[i].append(1)
+        data[i].append(1)
+        data[i][0] = events[i]
+        data[i][1] = []
+        data[i][2] = []
+        data[i][3] = []
+        for link in Ehfht.query.filter_by(eventsId=events[i].id).all():
+            # print('link: '+link)
+            if link.portions == 0:
+                continue
+            data[i][1].append(Foods.query.filter_by(id=link.foodsId).first().name)
+            data[i][2].append(link.portions)
+            data[i][3].append(Tags.query.filter_by(id=link.tagsId).first().name)
+    print(data)
+    return render_template("home.html", user=current_user, editEvents=True, base_url=(url_for('views.home')+'img'+'/'), processed_data=data)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
