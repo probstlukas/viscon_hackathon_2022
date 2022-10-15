@@ -1,7 +1,7 @@
 # Anything that's not related to authentication that the user can go to, will go here (login page, home page, etc.)
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note, Event
+from .models import Event
 from . import db
 import json
 from datetime import datetime, timedelta
@@ -19,7 +19,7 @@ def home():
 
 @views.route('/add-event', methods=['GET', 'POST'])
 @login_required
-def add_note():
+def add_event():
     if request.method == 'POST':
         eventLocation = request.form.get('eventLocation')
         eventName = request.form.get('eventName')
