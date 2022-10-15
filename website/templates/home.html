@@ -24,7 +24,7 @@
           <div class="row g-0">
             <div class="col-md-3">
               <img src="{{
-                base_url~image.query.filter_by(id=event.image_id).first().id~'.'~image.query.filter_by(id=event.image_id).first().ending
+                base_url~images.query.filter_by(id=event.imageId).first().id~'.'~images.query.filter_by(id=event.imageId).first().suffix
               }}" class="img-fluid rounded-start" alt="Food">
             </div>
             <div class="col-md-8">
