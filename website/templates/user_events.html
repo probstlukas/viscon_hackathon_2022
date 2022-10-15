@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block title %}Food Finder{% endblock %} {% block content
+    %}
+    <h1 align="center" style="margin-top: 7px;">Your Events</h1>
+    <ul class="list-group list-group-flush" id="notes">
+      {% for event in events %}
+      <li class="list-group-item">
+        {% if user.is_authenticated %}
+            <button type="button" class="close" onClick="deleteEvent({{ event.id }})">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        {% endif %}
+        <!-- Same card template as in home.html !!-->
+        <div class="card mb-2 mt-2" style="max-width: 2000px;">
+          <div class="card-header d-flex">
+            <div>
+              <h4 style="margin-bottom: -1px;">{{ event.name }}</h4>
+            </div>
+            <a href="{{ 'https://www.google.com/maps?q=' + event.location }}" 
+              class="ms-auto text-decoration-none" 
+              target="_blank" 
+              rel="noopener noreferrer"> 
+              <h5 style="margin-bottom: -1px;"> <i class="bi bi-geo-alt-fill"></i> {{ event.location }} </h5>
+            </a>
+          </div>
+          <div class="row g-0">
+            <div class="col-md-3">
+              <img src="./static/samples/Pizza.jpg" class="img-fluid rounded-start" alt="Food">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body d-flex justify-content-center">
+                <div class="card no-shrink" style="max-width: 2000px;">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> {{ event.foods }} </li>
+                    <li class="list-group-item"> {{ event.foods }} </li>
+                    <li class="list-group-item"> {{ event.foods }}   </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--<button type="button" class="close" onClick="deleteNote({{ '''note.id''' }})">
+          <span aria-hidden="true">&times;</span>
+        </button>-->
+      </li>
+      {% endfor %}
+    </ul>
+    {% endblock %}

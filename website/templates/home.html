@@ -1,14 +1,9 @@
 {% extends "base.html" %} {% block title %}Food Finder{% endblock %} {% block content
     %}
-    <h1 align="center">Event List</h1>
+    <h1 align="center" style="margin-top: 7px;">Event List</h1>
     <ul class="list-group list-group-flush" id="notes">
       {% for event in events %}
       <li class="list-group-item">
-        {% if user.is_authenticated %}
-            <button type="button" class="close" onClick="deleteEvent({{ event.id }})">
-              <span aria-hidden="true">&times;</span>
-            </button>
-        {% endif %}
         <div class="card mb-2 mt-2" style="max-width: 2000px;">
           <div class="card-header d-flex">
             <div>
