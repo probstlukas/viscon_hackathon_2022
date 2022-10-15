@@ -23,11 +23,19 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 def home():
     if current_user.is_authenticated:
         return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), images=Images, user=current_user, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(user=current_user.id, visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all())
+        return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), images=Images, user=current_user, editEvents=False, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(user=current_user.id, visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all())
     else:
         return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), images=Images, user=current_user, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all())
+        return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), images=Images, user=current_user, editEvents=False, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all())
+
+#    return render_template("home.html", user=current_user, editEvents=False, base_url=(url_for('views.home')+'img'+'/'), image=Image, events=Event.query.filter_by(visibility=True)
+#                          .filter(Event.date < Event.endDate).order_by(Event.date).all())
+
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @views.route('/add-event', methods=['GET', 'POST'])
 @login_required
@@ -99,9 +107,11 @@ def add_event():
         flash('Event added!', category='success')
     return render_template("add_event.html", user=current_user)
 
+
 @views.route('/img/<filename>')
 def display_image(filename):
     return send_file(path.join(app.instance_path, app.config['UPLOAD_FOLDER'], filename), mimetype='image/gif')
+
 
 @views.route('/delete-event', methods=['POST'])
 def delete_event():
@@ -116,12 +126,15 @@ def delete_event():
 
     return jsonify({})
 
+
 @views.route('/all-events', methods=['GET', 'Post'])
 @login_required
 def all_events():
     return home()
 
+
 @views.route('/user-events', methods=['GET', 'POST'])
 @login_required
 def user_events():
-    return render_template("user_events.html", user=current_user, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(user=current_user.id, visibility=True).filter(Events.creationDate<Events.expirationDate).order_by(Events.creationDate).all())
+    #return render_template("user_events.html", user=current_user, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(user=current_user.id, visibility=True).filter(Events.creationDate<Events.expirationDate).order_by(Events.creationDate).all())
+    return render_template("home.html", user=current_user, ehfht=Ehfht, foods=Foods, editEvents=True, base_url=(url_for('views.home')+'img'+'/'), image=Images, events=Events.query.filter_by(user=current_user.id, visibility=True).filter(Events.creationDate<Events.expirationDate).order_by(Events.creationDate).all())
