@@ -5,6 +5,7 @@ from .models import Note, Event
 from . import db
 import json
 from datetime import datetime, timedelta
+from sqlalchemy import desc
 
 views = Blueprint('views', __name__)
 
@@ -12,9 +13,9 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 def home():
     if current_user.is_authenticated:
-        return render_template("home.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(Event.date>=datetime.now()-timedelta(hours=5)).all())
+        return render_template("home.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(Event.date>=datetime.now()-timedelta(hours=5)).order_by(desc(Event.date)).all())
     else:
-        return render_template("home.html", user=current_user, events=Event.query.filter_by(visibility=True).filter(Event.date>=datetime.now()-timedelta(hours=5)).all())
+        return render_template("home.html", user=current_user, events=Event.query.filter_by(visibility=True).filter(Event.date>=datetime.now()-timedelta(hours=5)).order_by(desc(Event.date)).all())
 
 @views.route('/add-event', methods=['GET', 'POST'])
 @login_required
