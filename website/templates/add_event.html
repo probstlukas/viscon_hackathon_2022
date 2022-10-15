@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block title %}Add Event{% endblock %} {% block content
+    %}
+    <h1 align="center">Add Event</h1>
+    <form method="POST">
+      <textarea name="eventName" id="note" class="form-control"></textarea>
+      <textarea name="eventLocation" id="note" class="form-control"></textarea>
+      <textarea name="eventFoods" id="note" class="form-control"></textarea>
+      <br />
+      <div align="center">
+        <button type="submit" class="btn btn-primary">Add Event</button>
+      </div>
+    </form>
+    {% endblock %}
