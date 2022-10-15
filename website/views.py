@@ -11,7 +11,7 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 def home():
     if current_user.is_authenticated:
-        return render_template("home.html", user=current_user, events=Event.query.get())
+        return render_template("home.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id).all())
     else:
         return render_template("home.html", user=current_user, events=Event.query.all())
 
