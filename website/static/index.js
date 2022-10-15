@@ -5,4 +5,4 @@ function deleteEvent(eventId) {
     }).then((_res) => {
       window.location.href = "/";
     });
-  }
+}
