@@ -12,10 +12,7 @@ views = Blueprint('views', __name__)
 # Whenever we go on URL and type in /, this will show
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    if current_user.is_authenticated:
-        return render_template("home.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(Event.date<Event.endDate).order_by(Event.date).all())
-    else:
-        return render_template("home.html", user=current_user, events=Event.query.filter_by(visibility=True).filter(Event.date<Event.endDate).order_by(Event.date).all())
+    return render_template("home.html", user=current_user, events=Event.query.filter_by(visibility=True).filter(Event.date<Event.endDate).order_by(Event.date).all())
 
 @views.route('/add-event', methods=['GET', 'POST'])
 @login_required
@@ -46,3 +43,13 @@ def delete_note():
             db.session.commit()
 
     return jsonify({})
+
+@views.route('/all-events', methods=['GET', 'Post'])
+@login_required
+def all_events():
+    return home()
+
+@views.route('/user-events', methods=['GET', 'POST'])
+@login_required
+def user_events():
+    return render_template("user_events.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(Event.date<Event.endDate).order_by(Event.date).all())
