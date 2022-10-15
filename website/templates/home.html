@@ -5,17 +5,12 @@
       {% for event in events %}
       <li class="list-group-item">
         {{ event.name }}, {{ event.location }}, {{ event.foods }}, {{ event.user_id }}
-        <!--<button type="button" class="close" onClick="deleteNote({{ '''note.id''' }})">
-          <span aria-hidden="true">&times;</span>
-        </button>-->
+        {% if user.is_authenticated %}
+            <button type="button" class="close" onClick="deleteEvent({{ event.id }})">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        {% endif %}
       </li>
       {% endfor %}
     </ul>
-    <!--<form method="POST">
-      <textarea name="note" id="note" class="form-control"></textarea>
-      <br />
-      <div align="center">
-        <button type="submit" class="btn btn-primary">Add Note</button>
-      </div>
-    </form>-->
     {% endblock %}

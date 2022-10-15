@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 from .models import Note, Event
 from . import db
 import json
+import datetime
 
 views = Blueprint('views', __name__)
 
@@ -11,9 +12,9 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 def home():
     if current_user.is_authenticated:
-        return render_template("home.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id).all())
+        return render_template("home.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id, visibility=True, ).all())
     else:
-        return render_template("home.html", user=current_user, events=Event.query.all())
+        return render_template("home.html", user=current_user, events=Event.query.filter_by(visibility=True).all())
 
 @views.route('/add-event', methods=['GET', 'POST'])
 @login_required
@@ -33,14 +34,14 @@ def add_note():
 
     return render_template("add_event.html", user=current_user)
 
-'''@views.route('/delete-note', methods=['POST'])
+@views.route('/delete-event', methods=['POST'])
 def delete_note():
-    note = json.loads(request.data)
-    noteId = note['noteId']
-    note = Note.query.get(noteId)
-    if note:
-        if note.user_id == current_user.id:
-            db.session.delete(note)
+    event = json.loads(request.data)
+    eventId = event['eventId']
+    event = Event.query.get(eventId)
+    if event:
+        if event.user_id == current_user.id:
+            event.visibility = False
             db.session.commit()
 
-    return jsonify({})'''
+    return jsonify({})
