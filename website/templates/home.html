@@ -12,15 +12,17 @@
         <div class="card mb-2 mt-2" style="max-width: 2000px;">
           <div class="card-header d-flex">
             <div>
-              <h5 style="margin-bottom: -10px;">{{ event.name }}</h5>
+              <h4 style="margin-bottom: -1px;">{{ event.name }}</h4>
             </div>
-            <a href="{{ 'https://www.google.com/maps?q=' + event.location }}" class="ml-auto" target="_blank" rel="noopener noreferrer"> 
-              <i class="bi bi-geo-alt-fill"></i>
-              {{ event.location }}
+            <a href="{{ 'https://www.google.com/maps?q=' + event.location }}" 
+              class="ms-auto text-decoration-none" 
+              target="_blank" 
+              rel="noopener noreferrer"> 
+              <h5> <i class="bi bi-geo-alt-fill"></i> {{ event.location }} </h5>
             </a>
           </div>
           <div class="row g-0">
-            <div class="col-md-4">
+            <div class="col-md-3">
               <img src="./static/samples/Pizza.jpg" class="img-fluid rounded-start" alt="Food">
             </div>
             <div class="col-md-8">
