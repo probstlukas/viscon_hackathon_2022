@@ -39,21 +39,22 @@
                   <div class="w-100"></div>
                   <div class="card no-shrink" style="max-width: 2000px;">
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item"> 
-                        <div class="row align-items-center">
-                          <div class="col-5 ">{{ event.foods }}</div>
-                          <div class="col-1 d-flex justify-content-center"><i class="bi bi-check"></i></div>
-                          <!-- TODO turn these 3s into event properties-->
-                          <div class="col-2 d-flex justify-content-center">3</div>
-                          <div class="col-2 d-flex justify-content-center">3</div>
-                          <div class="col-2 d-flex justify-content-center">
-                            <button type="button" class="btn btn-warning">
-                              Interested!
-                            </button>
+                      {% for food in event.foods.split(',') %}
+                        <li class="list-group-item"> 
+                          <div class="row align-items-center">
+                            <div class="col-5 ">{{ food }}</div>
+                            <div class="col-1 d-flex justify-content-center"><i class="bi bi-check"></i></div>
+                            <!-- TODO turn these 3s into event properties-->
+                            <div class="col-2 d-flex justify-content-center">3</div>
+                            <div class="col-2 d-flex justify-content-center">3</div>
+                            <div class="col-2 d-flex justify-content-center">
+                              <button type="button" class="btn btn-warning">
+                                Interested!
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item"> {{ event.foods }} </li>
+                        </li>
+                      {% endfor %}
                     </ul>
                   </div>  
                 </div>
