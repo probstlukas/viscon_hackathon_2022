@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block title %}Food Finder{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}Food Finder{% endblock %} {% block content
+    %}
     <h1 align="center" style="margin-top: 7px;">{% if editEvents %}Your Events{% else %}Event List{% endif %}</h1>
     <ul class="list-group list-group-flush" id="notes">
       {% for event in events %}
@@ -23,7 +24,7 @@
           <div class="row g-0">
             <div class="col-md-3">
               <img src="{{
-                base_url~image.query.filter_by(id=event.image_id).first().id~'.'~image.query.filter_by(id=event.image_id).first().ending
+                base_url~images.query.filter_by(id=event.imageId).first().id~'.'~images.query.filter_by(id=event.imageId).first().suffix
               }}" class="img-fluid rounded-start" alt="Food">
             </div>
             <div class="col-md-8">
@@ -51,67 +52,16 @@
                             </button>
                           </div>
                         </div>
-                        <a href="{{ 'https://www.google.com/maps?q=' + event.location }}"
-                           class="ms-auto text-decoration-none"
-                           target="_blank"
-                           rel="noopener noreferrer">
-                            <h5 style="margin-bottom: -1px;"><i class="bi bi-geo-alt-fill"></i> {{ event.location }}
-                            </h5>
-                        </a>
-                        {% if editEvents %}
-                            <button type="button" class="btn-close" aria-label="Close"
-                                    onClick="deleteEvent({{ event.id }})"></button>
-                        {% else %}
-                        <button type="button" class="btn btn-light"></button>
-                        {% endif %}
-                    </div>
-                    <div class="row g-0">
-                        <div class="col-md-3">
-                            <img src="{{ base_url~image.query.filter_by(id=event.image_id).first().id~'.'~image.query.filter_by(id=event.image_id).first().ending }}"
-                                 class="img-fluid rounded-start" alt="Food">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body d-flex justify-content-center">
-                                <div class="row align-items-center">
-                                    <div class="col-5 ">Type of food</div>
-                                    <div class="col-1 d-flex justify-content-center">
-                                        <center>Dietary Information</center>
-                                    </div>
-                                    <div class="col-2 d-flex justify-content-center">
-                                        <center>Leftover portions</center>
-                                    </div>
-                                    <div class="col-2 d-flex justify-content-center">
-                                        <center>Interested people</center>
-                                    </div>
-                                    <div class="col-2 d-flex justify-content-center">
-                                    </div>
-                                    <div class="w-100"></div>
-                                    <div class="card no-shrink" style="max-width: 2000px;">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">
-                                                <div class="row align-items-center">
-                                                    <div class="col-5 ">{{ event.foods }}</div>
-                                                    <div class="col-1 d-flex justify-content-center"><i
-                                                            class="bi bi-check"></i></div>
-                                                    <!-- TODO turn these 3s into event properties-->
-                                                    <div class="col-2 d-flex justify-content-center">3</div>
-                                                    <div class="col-2 d-flex justify-content-center">3</div>
-                                                    <div class="col-2 d-flex justify-content-center">
-                                                        <button type="button" class="btn btn-warning">
-                                                            Interested!
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item"> {{ event.foods }} </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                      </li>
+                      <li class="list-group-item"> {{ event.foods }} </li>
+                    </ul>
+                  </div>  
                 </div>
-            </li>
-        {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
     </ul>
-{% endblock %}
+    {% endblock %}
