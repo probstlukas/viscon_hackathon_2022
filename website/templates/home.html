@@ -7,7 +7,7 @@
         <div class="card mb-2 mt-2" style="max-width: 2000px;">
           <div class="card-header d-flex">
             <div>
-              <h4 style="margin-bottom: -1px;">{{ event.name }} {{ event.date.strftime("%d.%m.%Y %H:%M") }}</h4>
+              <h4 style="margin-bottom: -1px;">{{ event.name }} {{ event.creationDate.strftime("%d.%m.%Y %H:%M") }}</h4>
             </div>
             <a href="{{ 'https://www.google.com/maps?q=' + event.location }}" 
               class="ms-auto text-decoration-none" 
@@ -24,7 +24,7 @@
           <div class="row g-0">
             <div class="col-md-3">
               <img src="{{
-                base_url~images.query.filter_by(id=event.imageId).first().id~'.'~images.query.filter_by(id=event.imageId).first().suffix
+                base_url~event.imageId~'.'~images.query.filter_by(id=event.imageId).first().suffix
               }}" class="img-fluid rounded-start" alt="Food">
             </div>
             <div class="col-md-8">
@@ -41,7 +41,7 @@
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item"> 
                         <div class="row align-items-center">
-                          <div class="col-5 ">{{ event.foods }}</div>
+                          <div class="col-5 ">{{ 'event.foods' }}</div>
                           <div class="col-1 d-flex justify-content-center"><i class="bi bi-check"></i></div>
                           <!-- TODO turn these 3s into event properties-->
                           <div class="col-2 d-flex justify-content-center">3</div>
@@ -53,7 +53,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item"> {{ event.foods }} </li>
+                      <li class="list-group-item"> {{ 'event.foods' }} </li>
                     </ul>
                   </div>  
                 </div>

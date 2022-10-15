@@ -3,36 +3,6 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 from datetime import timedelta, datetime
 
-
-'''class Event(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(1000))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
-    endDate = db.Column(db.DateTime(timezone=True), default=datetime.now()+timedelta(hours=3))
-    location = db.Column(db.String(1000))
-    foods = db.Column(db.String(1000))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    visibility = db.Column(db.Boolean, default=True)
-    image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
-
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
-    first_name = db.Column(db.String(150))
-    events = db.relationship('Event')
-
-class Image(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    ending = db.Column(db.String(100))
-
-
-'''
-######### NEW NEW NEW NEW
-
-
-
 class Events(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
