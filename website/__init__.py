@@ -12,6 +12,7 @@ def create_app():
     # Encrypt the cookies and session data related to our website
     app.config['SECRET_KEY'] = 'thecodecrew'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://u2710490:wercmglierwhgiksemghxsrkeiugmhserli@rdbms.strato.de:3306/dbs8873216'
     app.wsgi_app = ProxyFix(
         app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
     )
