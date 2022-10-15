@@ -2,12 +2,22 @@
     %}
     <h1 align="center">Add Event</h1>
     <form method="POST">
-      <textarea name="eventName" id="note" class="form-control"></textarea>
-      <textarea name="eventLocation" id="note" class="form-control"></textarea>
-      <textarea name="eventFoods" id="note" class="form-control"></textarea>
-      <br />
-      <div align="center">
-        <button type="submit" class="btn btn-primary">Add Event</button>
-      </div>
+        <div class="form-group">
+            <label>VIS event name</label>
+            <input name="eventName" class="form-control" id="note" placeholder="Enter name of the event">
+        </div>
+        <div class="form-group">
+            <label>Location</label>
+            <input name="eventLocation" class="form-control" id="note" placeholder="Enter event location">
+        </div>
+        <div class="form-group">
+            <label>Food</label>
+            <input name="eventFoods" class="form-control" id="note" placeholder="Enter leftovers">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Take a photo of the food</label>
+            <input name="eventPhoto" type="file" class="form-control" id="note" />
+        </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     {% endblock %}
