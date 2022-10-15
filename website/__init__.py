@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -11,6 +12,9 @@ def create_app():
     # Encrypt the cookies and session data related to our website
     app.config['SECRET_KEY'] = 'thecodecrew'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.wsgi_app = ProxyFix(
+        app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+    )
     db.init_app(app)
 
     from .views import views
