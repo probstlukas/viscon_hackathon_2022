@@ -15,6 +15,7 @@ class Event(db.Model):
     location = db.Column(db.String(10000))
     foods = db.Column(db.String(10000))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    visibility = db.Column(db.Boolean, default=True)
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
