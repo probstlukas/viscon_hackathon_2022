@@ -3,11 +3,6 @@
     <ul class="list-group list-group-flush" id="notes">
       {% for event in events %}
       <li class="list-group-item">
-        {% if editEvents %}
-          <button type="button" class="close" onClick="deleteEvent({{ event.id }})">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        {% endif %}
         <div class="card mb-2 mt-2" style="max-width: 2000px;">
           <div class="card-header d-flex">
             <div>
@@ -19,6 +14,11 @@
               rel="noopener noreferrer"> 
               <h5 style="margin-bottom: -1px;"> <i class="bi bi-geo-alt-fill"></i> {{ event.location }} </h5>
             </a>
+            {% if editEvents %}
+              <button type="button" class="btn-close" aria-label="Close" onClick="deleteEvent({{ event.id }})"></button>
+            {% else %}
+              <button type="button" class="btn btn-light"></button>
+            {% endif %}
           </div>
           <div class="row g-0">
             <div class="col-md-3">
