@@ -22,7 +22,7 @@ def home():
         newLeftOverCount = request.form.get('newLeftOverCount')
         interest = request.form.get('interest')
         if newLeftOverCount is not None:
-            # Update leftover count in DB
+            db.session.query(current_user).filter_by(id=eventID).update({""})
             pass
         if interest is not None:
             # Increase interest by one
