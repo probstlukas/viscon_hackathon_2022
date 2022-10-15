@@ -17,6 +17,16 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 @views.route('/all-events', methods=['GET', 'Post'])
 @views.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        eventID = request.form.get('eventID')
+        newLeftOverCount = request.form.get('newLeftOverCount')
+        interest = request.form.get('interest')
+        if newLeftOverCount is not None:
+            # Update leftover count in DB
+            pass
+        if interest is not None:
+            # Increase interest by one
+            pass
 
 
     return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), images=Images, user=current_user, editEvents=False, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all())

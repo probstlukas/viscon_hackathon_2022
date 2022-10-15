@@ -61,16 +61,17 @@
                               {% endif %}
                             </div>
                             <div class="col-2 d-flex justify-content-center">
-                              {% if editEvents %}
                               <!-- TODO Somehow, I don't think, this'll work -->
                               <input class="form-control" style="display: none;" name="eventID" value={{ event.id }}></input>
+                              {% if editEvents %}
                               <!-- Food item mitsenden -->
                               <input class="form-control" style="display: none;" name="eventID" value={{ event.id }}></input>
                               <button type="submit" class="btn btn-success">
                                 Save!
                               </button>
                               {% else %}
-                              <button type="button" class="btn btn-warning">
+                              <input class="form-control" style="display: none;" name="interest" value="1"></input>
+                              <button type="submit" class="btn btn-warning">
                                 Interested!
                               </button>
                               {% endif %}
