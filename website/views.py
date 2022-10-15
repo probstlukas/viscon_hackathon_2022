@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 
 # from main import app
 from .models import Events, Images, Foods, Ehfht, Tags
-from . import db, app#, mysql
+from . import db, app
 import json
 from os import path
 
@@ -14,14 +14,12 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 
 # Whenever we go on URL and type in /, this will show
+@views.route('/all-events', methods=['GET', 'Post'])
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), images=Images, user=current_user, editEvents=False, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all())
+    
 
-@views.route('/all-events', methods=['GET', 'Post'])
-@login_required
-def all_events():
-    return home()
+    return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), images=Images, user=current_user, editEvents=False, ehfht=Ehfht, foods=Foods, events=Events.query.filter_by(visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all())
 
 @views.route('/user-events', methods=['GET', 'POST'])
 @login_required
