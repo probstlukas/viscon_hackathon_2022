@@ -12,61 +12,46 @@ views = Blueprint('views', __name__)
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
+def generate_home_data(events):
+    for event in events:
+        row = [event, [], [], [], []]
+        # TODO I have a feeling something here does not work correctly
+        for link in Ehfht.query.filter_by(eventsId=event.id).all():
+            if link.portions == 0:
+                continue
+
+            row[1].append(link.interest)
+            row[2].append(Foods.query.filter_by(id=link.foodsId).first().name)
+            row[3].append(link.portions)
+            row[4].append(Tags.query.filter_by(id=link.tagsId).first().name)
+
+        yield row
 
 # Whenever we go on URL and type in /, this will show
 @views.route('/all-events', methods=['GET', 'Post'])
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    events=Events.query.filter_by(visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all()
-    data = []
-    for i in range(len(events)):
-        print('i: '+str(i))
-        data.append(1)
-        data[i] = []
-        data[i].append(1)
-        data[i].append(1)
-        data[i].append(1)
-        data[i].append(1)
-        data[i][0] = events[i]
-        data[i][1] = []
-        data[i][2] = []
-        data[i][3] = []
-        for link in Ehfht.query.filter_by(eventsId=events[i].id).all():
-            #print('link: '+link)
-            if link.portions == 0:
-                continue
-            data[i][1].append(Foods.query.filter_by(id=link.foodsId).first().name)
-            data[i][2].append(link.portions)
-            data[i][3].append(Tags.query.filter_by(id=link.tagsId).first().name)
+    # if request.method == 'POST':
+    #     eventID = request.form.get('eventID')
+    #     newLeftOverCount = request.form.get('newLeftOverCount')
+    #     interest = request.form.get('interest')
+    #     if newLeftOverCount is not None:
+    #         db.session.query(current_user).filter_by(id=eventID).update({""})
+    #         pass
+    #     if interest is not None:
+    #         # Increase interest by one
+    #         pass
+    data = list(generate_home_data(Events.query.filter_by(visibility=True).filter(Events.creationDate < Events.expirationDate).order_by(Events.creationDate).all()))
     print(data)
-    return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), user=current_user, editEvents=False, processed_data=data)
+
+    return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), user=current_user, editEvents=False, processed_data=data, images=Images)
 
 @views.route('/user-events', methods=['GET', 'POST'])
 @login_required
 def user_events():
-    events=Events.query.filter_by(user=current_user.id, visibility=True).filter(Events.creationDate<Events.expirationDate).order_by(Events.creationDate).all()
-    data = []
-    for i in range(len(events)):
-        print('i: ' + str(i))
-        data.append(1)
-        data[i] = []
-        data[i].append(1)
-        data[i].append(1)
-        data[i].append(1)
-        data[i].append(1)
-        data[i][0] = events[i]
-        data[i][1] = []
-        data[i][2] = []
-        data[i][3] = []
-        for link in Ehfht.query.filter_by(eventsId=events[i].id).all():
-            # print('link: '+link)
-            if link.portions == 0:
-                continue
-            data[i][1].append(Foods.query.filter_by(id=link.foodsId).first().name)
-            data[i][2].append(link.portions)
-            data[i][3].append(Tags.query.filter_by(id=link.tagsId).first().name)
-    print(data)
-    return render_template("home.html", user=current_user, editEvents=True, base_url=(url_for('views.home')+'img'+'/'), processed_data=data)
+    data = list(generate_home_data(Events.query.filter_by(user=current_user.id, visibility=True).filter(Events.creationDate<Events.expirationDate).order_by(Events.creationDate).all()))
+
+    return render_template("home.html", user=current_user, editEvents=True, base_url=(url_for('views.home')+'img'+'/'), processed_data=data, images=Images)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
