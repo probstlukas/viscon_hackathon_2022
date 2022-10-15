@@ -80,7 +80,7 @@ def add_event():
 
             eventLocation = request.form.get('eventLocation')
             eventName = request.form.get('eventName')
-            eventFood = ["pasta", "pizza"]#request.form.get('eventFood')
+            eventFood = [str.strip(s) for s in str.split(request.form.get('eventFood'), ",")]
             eventFoodIds = []
             count = [5,2]
             tags = ['vegan', 'vegetarian']
