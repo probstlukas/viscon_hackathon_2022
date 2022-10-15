@@ -18,7 +18,7 @@
               class="ms-auto text-decoration-none" 
               target="_blank" 
               rel="noopener noreferrer"> 
-              <h5> <i class="bi bi-geo-alt-fill"></i> {{ event.location }} </h5>
+              <h5 style="margin-bottom: -1px;"> <i class="bi bi-geo-alt-fill"></i> {{ event.location }} </h5>
             </a>
           </div>
           <div class="row g-0">
@@ -26,10 +26,14 @@
               <img src="./static/samples/Pizza.jpg" class="img-fluid rounded-start" alt="Food">
             </div>
             <div class="col-md-8">
-              <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                {{ event.foods }}, {{ event.user_id }}
+              <div class="card-body d-flex justify-content-center">
+                <div class="card no-shrink" style="max-width: 2000px;">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> {{ event.foods }} </li>
+                    <li class="list-group-item"> {{ event.foods }} </li>
+                    <li class="list-group-item"> {{ event.foods }}   </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
