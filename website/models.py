@@ -3,6 +3,7 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 from datetime import timedelta, datetime
 
+
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(10000))
@@ -12,6 +13,8 @@ class Event(db.Model):
     foods = db.Column(db.String(10000))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     visibility = db.Column(db.Boolean, default=True)
+    image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,3 +22,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
     events = db.relationship('Event')
+
+
+class Image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ending = db.Column(db.String(100))
