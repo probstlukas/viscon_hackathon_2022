@@ -100,6 +100,7 @@ def add_event():
             count = [5,2]
             tags = ['vegan', 'vegetarian']
             tagIds = []
+            expirationDate = request.form.get('availableUntil')
             for i in eventFood:
                 new = Foods(name=i)
                 db.session.add(new)
@@ -110,7 +111,7 @@ def add_event():
                 db.session.add(new)
                 db.session.commit()
                 tagIds.append(new.id)
-            new_eventN = Events(name=eventName, location=eventLocation, user=current_user.id, imageId=new_imageN.id)
+            new_eventN = Events(name=eventName, location=eventLocation, expirationDate=expirationDate, user=current_user.id, imageId=new_imageN.id)
             db.session.add(new_eventN)
             db.session.commit()
             eventId = new_eventN.id
