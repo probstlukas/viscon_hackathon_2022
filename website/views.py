@@ -21,15 +21,19 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 @views.route('/', methods=['GET', 'POST'])
 def home():
     if current_user.is_authenticated:
-        return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), image=Image, user=current_user, events=Event.query.filter_by(user_id=current_user.id,
-                                                                                            visibility=True)
+        return render_template("home.html", base_url=(url_for('views.home') + 'img' + '/'), image=Image,
+                               user=current_user, events=Event.query.filter_by(user_id=current_user.id,
+                                                                               visibility=True)
                                .filter(Event.date < Event.endDate).order_by(Event.date).all())
     else:
-        return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), image=Image, user=current_user, events=Event.query.filter_by(visibility=True)
+        return render_template("home.html", base_url=(url_for('views.home') + 'img' + '/'), image=Image,
+                               user=current_user, events=Event.query.filter_by(visibility=True)
                                .filter(Event.date < Event.endDate).order_by(Event.date).all())
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @views.route('/add-event', methods=['GET', 'POST'])
 @login_required
@@ -69,9 +73,11 @@ def add_event():
         flash('Event added!', category='success')
     return render_template("add_event.html", user=current_user)
 
+
 @views.route('/img/<filename>')
 def display_image(filename):
     return send_file(path.join(app.instance_path, app.config['UPLOAD_FOLDER'], filename), mimetype='image/gif')
+
 
 @views.route('/delete-event', methods=['POST'])
 def delete_event():
@@ -85,12 +91,16 @@ def delete_event():
 
     return jsonify({})
 
+
 @views.route('/all-events', methods=['GET', 'Post'])
 @login_required
 def all_events():
     return home()
 
+
 @views.route('/user-events', methods=['GET', 'POST'])
 @login_required
 def user_events():
-    return render_template("user_events.html", user=current_user, events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(Event.date<Event.endDate).order_by(Event.date).all())
+    return render_template("user_events.html", user=current_user,
+                           events=Event.query.filter_by(user_id=current_user.id, visibility=True).filter(
+                               Event.date < Event.endDate).order_by(Event.date).all())
