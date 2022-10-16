@@ -1,22 +1,23 @@
-{% extends "base.html" %} {% block title %}Food Finder{% endblock %} {% block content
-    %}
+{% extends "base.html" %} {% block title %}Food Finder{% endblock %} {% block content %}
     <h1 align="center" style="margin-top: 7px;">{% if editEvents %}Your Events{% else %}Event List{% endif %}</h1>
     <ul class="list-group list-group-flush" id="notes">
-      {% for event in events %}
+      {% for row in processed_data %}
+      {% set outer_loop = loop %}
       <li class="list-group-item">
         <div class="card mb-2 mt-2" style="max-width: 2000px;">
           <div class="card-header d-flex">
             <div>
-              <h4 style="margin-bottom: -1px;">{{ event.name }} {{ event.creationDate.strftime("%d.%m.%Y %H:%M") }}</h4>
+              <h4 style="margin-bottom: -1px;">{{ row[0].name }}</h4>
+              <h6 style="color: grey">{{ row[0].creationDate.strftime("%d.%m.%Y %H:%M") }}</h6>
             </div>
-            <a href="{{ 'https://www.google.com/maps?q=' + event.location }}" 
+            <a href="{{ 'https://www.google.com/maps?q=' + row[0].location }}" 
               class="ms-auto text-decoration-none" 
               target="_blank" 
               rel="noopener noreferrer"> 
-              <h5 style="margin-bottom: -1px;"> <i class="bi bi-geo-alt-fill"></i> {{ event.location }} </h5>
+              <h5 style="margin-bottom: -1px;"> <i class="bi bi-geo-alt-fill"></i> {{ row[0].location }} </h5>
             </a>
             {% if editEvents %}
-              <button type="button" class="btn-close" aria-label="Close" onClick="deleteEvent({{ event.id }})"></button>
+              <button type="button" class="btn-close" aria-label="Close" onClick="deleteEvent({{ row[0].id }})"></button>
             {% else %}
               <button type="button" class="btn btn-light"></button>
             {% endif %}
@@ -24,7 +25,7 @@
           <div class="row g-0">
             <div class="col-md-3">
               <img src="{{
-                base_url~event.imageId~'.'~images.query.filter_by(id=event.imageId).first().suffix
+                base_url~row[0].imageId~'.'~images.query.filter_by(id=row[0].imageId).first().suffix
               }}" class="img-fluid rounded-start" alt="Food">
             </div>
             <div class="col-md-8">
@@ -34,34 +35,62 @@
                   <div class="col-1 d-flex justify-content-center"><center>Dietary Information</center></div>
                   <div class="col-2 d-flex justify-content-center"><center>Leftover portions</center></div>
                   <div class="col-2 d-flex justify-content-center"><center>Interested people</center></div>
-                  <div class="col-2 d-flex justify-content-center">
-                  </div>
+                  <div class="col-2 d-flex justify-content-center"></div>
                   <div class="w-100"></div>
                   <div class="card no-shrink" style="max-width: 2000px;">
                     <ul class="list-group list-group-flush">
+                      <!-- processed_data[loop.index0][1] = interest array of current event-->
+                      {% for idx in range(processed_data[loop.index0][1] | length) %}
                       <li class="list-group-item"> 
-                        <div class="row align-items-center">
-                          <div class="col-5 ">{{ 'event.foods' }}</div>
-                          <div class="col-1 d-flex justify-content-center"><i class="bi bi-check"></i></div>
-                          <!-- TODO turn these 3s into event properties-->
-                          <div class="col-2 d-flex justify-content-center">3</div>
-                          <div class="col-2 d-flex justify-content-center">3</div>
-                          <div class="col-2 d-flex justify-content-center">
-                            <button type="button" class="btn btn-warning">
-                              Interested!
-                            </button>
+                        <form method="POST" enctype="multipart/form-data">
+                          <div class="row align-items-center">
+                            <!-- [2] == food array -->
+                            <div class="col-5">{{ processed_data[outer_loop.index0][2][idx] }}</div>
+                            <div class="col-1 d-flex justify-content-center">
+                              <!-- [4] == tags array -->
+                              {{ processed_data[outer_loop.index0][4][idx] }}
+                            </div>
+                            <div class="col-2 d-flex justify-content-center">
+                              <!-- [3] == quantities array -->
+                              {% if editEvents %}
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="{{ processed_data[outer_loop.index0][3][idx] }}" id="editLeftover" name="newLeftOverCount">
+                                </div>
+                              {% else %}
+                                {{ processed_data[outer_loop.index0][3][idx] }}
+                              {% endif %}
+                            </div>
+                            <div class="col-2 d-flex justify-content-center">
+                              {{ processed_data[outer_loop.index0][1][idx] }}
+                            </div>
+                            <div class="col-2 d-flex justify-content-center">
+                              <!-- TODO Somehow, I don't think, this'll work -->
+                              <input class="form-control" style="display: none;" name="eventID" value={{ row[0].id }}></input>
+                              {% if editEvents %}
+                              <!-- Food item mitsenden -->
+                                <input class="form-control" style="display: none;" name="eventID" value={{ row[0].id }}></input>
+                                <button type="submit" class="btn btn-success">
+                                  Save!
+                                </button>
+                              {% else %}
+                                <input class="form-control" style="display: none;" name="interest" value="1"></input>
+                                <button type="submit" class="btn btn-warning">
+                                  Interested!
+                                </button>
+                              {% endif %}
+                            </div>
                           </div>
-                        </div>
+                        </form>
                       </li>
-                      <li class="list-group-item"> {{ 'event.foods' }} </li>
+                      {% endfor %}
                     </ul>
                   </div>  
                 </div>
               </div>
-            </div>
+            </div> 
           </div>
         </div>
       </li>
       {% endfor %}
     </ul>
-    {% endblock %}
+  {% endblock %}
