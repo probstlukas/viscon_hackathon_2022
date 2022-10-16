@@ -8,5 +8,7 @@ RUN pip3 install -r ./app/requirements.txt
 
 EXPOSE 8080
 
+VOLUME [ "/app/instance/img/" ]
+
 #CMD [ "sh gunicorn --chdir app main:app -b 0.0.0.0:8080" ]
 ENTRYPOINT ["./app/gunicorn.sh"]
