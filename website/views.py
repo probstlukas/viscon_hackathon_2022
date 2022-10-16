@@ -128,3 +128,15 @@ def delete_event():
             eventN.visibility = False
             db.session.commit()
     return jsonify({})
+
+@views.route('/add-interest', methods=['POST'])
+def add_interest():
+    rdata = json.loads(request.data)
+    eventId = rdata['eventId']
+    foodName = rdata['foodName']
+    print('arrived ad /add-interest')
+    #record = Ehfht.query.filter_by(eventsId=eventId).all()
+    record2 = Ehfht.query.filter_by(eventsId=eventId).join(Foods, Foods.id == Ehfht.foodsId).add_columns(Foods.name).filter(Foods.name == foodName).first()
+    record2[0].interest += 1
+    db.session.commit()
+    return jsonify({})
