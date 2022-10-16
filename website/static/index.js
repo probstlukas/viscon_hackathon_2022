@@ -3,7 +3,7 @@ function deleteEvent(eventId) {
       method: "POST",
       body: JSON.stringify({ eventId: eventId }),
     }).then((_res) => {
-      window.location.href = "/";
+      window.location.href = "/user-events";
     });
 }
 
