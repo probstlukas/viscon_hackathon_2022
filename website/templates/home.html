@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block title %}Food Finder{% endblock %} {% block content %}
-    <h1 align="center" style="margin-top: 7px;">{% if editEvents %}Your Events{% else %}Event List{% endif %}</h1>
+    <h1 align="center" style="margin-top: 7px;">{% if editEvents %}Your Events{% else %}{% endif %}</h1> <!-- Event List -->
     <ul class="list-group list-group-flush" id="notes">
       {% for row in processed_data %}
       {% set outer_loop = loop %}
