@@ -8,8 +8,8 @@ class Events(db.Model):
     name = db.Column(db.String(100))
     user = db.Column(db.Integer)
     location = db.Column(db.String(200))
-    creationDate = db.Column(db.DateTime(timezone=True), default=func.now())
-    expirationDate = db.Column(db.DateTime(timezone=True), default=datetime.now()+timedelta(hours=3))
+    creationDate = db.Column(db.DateTime(timezone=True), default=datetime.now())
+    expirationDate = db.Column(db.DateTime(timezone=True), default=(datetime.now()+timedelta(hours=2))+timedelta(hours=24))
     visibility = db.Column(db.Boolean, default=True)
     imageId = db.Column(db.Integer)
 

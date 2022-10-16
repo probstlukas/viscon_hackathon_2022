@@ -13,6 +13,8 @@ views = Blueprint('views', __name__)
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
+#(datetime.now()+timedelta(hours=2))
+
 def generate_home_data(events):
     for event in events:
         row = [event, [], [], [], []]
@@ -42,7 +44,7 @@ def home():
     #     if interest is not None:
     #         # Increase interest by one
     #         pass
-    data = list(generate_home_data(Events.query.filter_by(visibility=True).filter(datetime.now() < Events.expirationDate).order_by(Events.creationDate).all()))
+    data = list(generate_home_data(Events.query.filter_by(visibility=True).filter((datetime.now()) < Events.expirationDate).order_by(Events.creationDate).all()))
     print(data)
 
     return render_template("home.html", base_url=(url_for('views.home')+'img'+'/'), user=current_user, editEvents=False, processed_data=data, images=Images)
@@ -50,7 +52,7 @@ def home():
 @views.route('/user-events', methods=['GET', 'POST'])
 @login_required
 def user_events():
-    data = list(generate_home_data(Events.query.filter_by(user=current_user.id, visibility=True).filter(datetime.now() < Events.expirationDate).order_by(Events.creationDate).all()))
+    data = list(generate_home_data(Events.query.filter_by(user=current_user.id, visibility=True).filter((datetime.now()) < Events.expirationDate).order_by(Events.creationDate).all()))
 
     return render_template("home.html", user=current_user, editEvents=True, base_url=(url_for('views.home')+'img'+'/'), processed_data=data, images=Images)
 
@@ -99,7 +101,7 @@ def add_event():
             expirationDate = request.form.get('availableUntil')
             print('expirationDate: '+expirationDate)
             if expirationDate == '':
-                expirationDate=datetime.now()+timedelta(hours=24)
+                expirationDate=(datetime.now()+timedelta(hours=2))+timedelta(hours=24)
             else:
                 expirationDate=datetime.strptime(expirationDate, '%Y-%m-%dT%H:%M')
             print(expirationDate)
