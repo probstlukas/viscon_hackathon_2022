@@ -5,3 +5,15 @@
 .bg-company-green {
     background-color: #38761d !important;
 }
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url("fonts/OpenSans-Regular.woff2") format("woff2"),
+         url("fonts/OpenSans-Regular.woff") format('woff');
+    font-style: normal;
+}
+
+/* Would need to be loaded on server */
+/* body {
+    font-family: 'OpenSans';
+} */
