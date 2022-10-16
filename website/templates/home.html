@@ -42,7 +42,7 @@
                       <!-- processed_data[loop.index0][1] = interest array of current event-->
                       {% for idx in range(processed_data[loop.index0][1] | length) %}
                       <li class="list-group-item"> 
-                        <form method="POST" enctype="multipart/form-data">
+                        <!--<form method="POST" enctype="multipart/form-data">-->
                           <div class="row align-items-center">
                             <!-- [2] == food array -->
                             <div class="col-5">{{ processed_data[outer_loop.index0][2][idx] }}</div>
@@ -60,7 +60,7 @@
                                 {{ processed_data[outer_loop.index0][3][idx] }}
                               {% endif %}
                             </div>
-                            <div class="col-2 d-flex justify-content-center">
+                            <div class="col-2 d-flex justify-content-center" id="x{{ row[0].id~processed_data[outer_loop.index0][2][idx] }}">
                               {{ processed_data[outer_loop.index0][1][idx] }}
                             </div>
                             <div class="col-2 d-flex justify-content-center">
@@ -69,18 +69,18 @@
                               {% if editEvents %}
                               <!-- Food item mitsenden -->
                                 <input class="form-control" style="display: none;" name="eventID" value={{ row[0].id }}></input>
-                                <button type="submit" class="btn btn-success" onClick="saveChanges({{ row[0].id }}, '{{ processed_data[outer_loop.index0][2][idx] }}')">
+                                <button class="btn btn-success" onClick="saveChanges({{ row[0].id }}, '{{ processed_data[outer_loop.index0][2][idx] }}')">
                                   Save!
                                 </button>
                               {% else %}
                                 <input class="form-control" style="display: none;" name="interest" value="1"></input>
-                                <button type="submit" class="btn btn-warning" onClick="addInterest({{ row[0].id }}, '{{ processed_data[outer_loop.index0][2][idx] }}')">
+                                <button class="btn btn-warning" onClick="addInterest({{ row[0].id }}, '{{ processed_data[outer_loop.index0][2][idx] }}')">
                                   Interested!
                                 </button>
                               {% endif %}
                             </div>
                           </div>
-                        </form>
+                        <!--</form>-->
                       </li>
                       {% endfor %}
                     </ul>
