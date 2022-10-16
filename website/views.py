@@ -82,8 +82,18 @@ def add_event():
             eventName = request.form.get('eventName')
             eventFood = [str.strip(s) for s in str.split(request.form.get('eventFood'), ",")]
             eventFoodIds = []
-            count = [5,2]
-            tags = ['vegan', 'vegetarian']
+            count = [int(c) for c in str.split(request.form.get("portionCount"), ",")]
+            tags = [str.strip(s) for s in str.split(request.form.get('dietaryPreferences'), ";")]
+            if len(eventFood) != len(count):
+                flash("Food to Portion Mismatch", category='error')
+                return redirect(request.url)
+            if len(eventFood) != len(tags):
+                flash("Food to Dietary Preferences Mismatch", category='error')
+                return redirect(request.url)
+            if len(count) != len(tags):
+                flash("Portion to Dietary Preferences Mismatch", category='error')
+                return redirect(request.url)
+
             tagIds = []
             expirationDate = request.form.get('availableUntil')
             for i in eventFood:

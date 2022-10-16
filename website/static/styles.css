@@ -1,3 +1,7 @@
 .no-shrink {
     flex: 1 0 auto;
 }
+
+.bg-company-green {
+    background-color: #38761d !important;
+}
