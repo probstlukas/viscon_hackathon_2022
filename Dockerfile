@@ -1,5 +1,7 @@
 FROM python
 
+ENV TZ="Europe/Zurich"
+
 #COPY requirements.txt /
 COPY . /app
 RUN pip3 install -r ./app/requirements.txt
