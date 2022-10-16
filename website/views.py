@@ -140,3 +140,15 @@ def add_interest():
     record2[0].interest += 1
     db.session.commit()
     return jsonify({})
+
+@views.route('/update-event', methods=['POST'])
+def update_event():
+    rdata = json.loads(request.data)
+    eventId = rdata['eventId']
+    foodName = rdata['foodName']
+    newQuantity = rdata['newQuantity']
+    print('arrived ad /update-event')
+    record2 = Ehfht.query.filter_by(eventsId=eventId).join(Foods, Foods.id == Ehfht.foodsId).add_columns(Foods.name).filter(Foods.name == foodName).first()
+    record2[0].portions = newQuantity
+    db.session.commit()
+    return jsonify({})
