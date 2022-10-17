@@ -1,0 +1,63 @@
+version: '3.1'
+
+services:
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - npm-data:/data
+      - npm-encrypt:/etc/letsencrypt
+
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: cliugmsmoerigucse4t8o74tow34ot8xw39
+      MARIADB_USER: weociurczowgmo849uow98guwo45gm
+      MARIADB_PASSWORD: wrncw85zcmwgkunzsekugcmskeguzm
+    volumes:
+      - mariadb-volume:/var/lib/mysql
+    ports:
+      - '3306:3306'
+#    networks:
+#      - internal
+
+  foodfinder:
+    image: foodfinder
+    container_name: foodfinder
+    volumes:
+      - ./img/:/app/instance/img/
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      - PMA_ARBITRARY=1
+
+#  mysqlworkbench:
+#    image: lscr.io/linuxserver/mysql-workbench:latest
+#    container_name: mysql-workbench
+#    restart: unless-stopped
+#    volumes:
+#      - mysqlworkbench-volume:/config
+#    networks:
+#      - internal
+#    ports:
+#      - "80:3000"
+
+volumes:
+  mariadb-volume:
+  npm-data:
+  npm-encrypt:
+#  phpmyadmin-volume:
+#  mysqlworkbench-volume:
+
+#networks:
+#  internal:
